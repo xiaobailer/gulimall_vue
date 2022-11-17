@@ -101,5 +101,14 @@
   "directories": {
     "test": "test"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaobailer/gulimall_vue.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/xiaobailer/gulimall_vue/issues"
+  },
+  "homepage": "https://github.com/xiaobailer/gulimall_vue#readme"
 }

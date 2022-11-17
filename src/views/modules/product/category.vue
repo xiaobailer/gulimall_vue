@@ -167,32 +167,32 @@ export default {
 
     batchDelete() {
       let catIds = [];
-      let names=[];
+      let names = [];
       let checkNodes = this.$refs.menuTree.getCheckedNodes();
       console.log("获取到的节点", checkNodes);
       for (let i = 0; i < checkNodes.length; i++) {
         catIds.push(checkNodes[i].catId);
         names.push(checkNodes[i].name);
       }
-   
+
       this.$confirm(`此操作将永久删除[${names}], 是否继续?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then((data) => {
-         this.$http({
-         url: this.$http.adornUrl('/product/category/delete'),
-         method: 'post',
-         data: this.$http.adornData(catIds, false)
-         }).then(({ data }) => { 
-             this.$message({
+        .then(data => {
+          this.$http({
+            url: this.$http.adornUrl("/product/category/delete"),
+            method: "post",
+            data: this.$http.adornData(catIds, false)
+          }).then(({ data }) => {
+            this.$message({
               type: "success",
               message: "批量删除成功!"
             });
             //刷新菜单
             this.getMenus();
-         });
+          });
         })
         .catch(() => {
           this.$message({
@@ -200,9 +200,7 @@ export default {
             message: "已取消批量删除"
           });
         });
-    }
     },
-
     batchSave() {
       this.$http({
         url: this.$http.adornUrl("/product/category/update/sort"),
@@ -411,7 +409,8 @@ export default {
         });
 
       console.log("remove", node, data);
-    },
+    }
+  },
 
   created() {
     this.getMenus();
