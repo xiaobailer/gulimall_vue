@@ -58,7 +58,7 @@ export default {
         descript: "",
         showStatus: 1,
         firstLetter: "",
-        sort: 0
+        sort: null
       },
       dataRule: {
         name: [{ required: true, message: "品牌名不能为空", trigger: "blur" }],
@@ -92,7 +92,7 @@ export default {
         sort: [
           {
             validator: (rule, value, callback) => {
-              if (value == "") {
+              if (value == null) {
                 callback(new Error("排序字段不能为空"));
               } else if (!Number.isInteger(value) || value < 0) {
                 callback(new Error("排序字段必须为整数，且不能小于0"));
