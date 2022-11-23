@@ -27,7 +27,7 @@
           >Append</el-button>
           <el-button type="text" size="mini" @click="edit(data)">Edit</el-button>
           <el-button
-            v-if="data.child.length==0"
+            v-if="data.children.length==0"
             type="text"
             size="mini"
             @click="() => remove(node, data)"
@@ -89,7 +89,7 @@ export default {
       menus: [],
       expandedKey: [],
       defaultProps: {
-        children: "child",
+        children: "children",
         label: "name"
       }
     };
