@@ -99,7 +99,7 @@ export default {
         attrId: 0,
         attrName: "",
         searchType: 0,
-        valueType: 1,
+        valueType: 0,
         icon: "",
         valueSelect: "",
         attrType: 1,
@@ -111,6 +111,9 @@ export default {
       catelogPath: [],
       attrGroups: [],
       dataRule: {
+        attrGroupId: [
+           { required: true, message: "所属分组不能为空", trigger: "blur" }
+        ],
         attrName: [
           { required: true, message: "属性名不能为空", trigger: "blur" }
         ],
@@ -162,8 +165,8 @@ export default {
       }
     };
   },
-  props:{
-    type:{
+  props: {
+    type: {
       type: Number,
       default: 1
     }

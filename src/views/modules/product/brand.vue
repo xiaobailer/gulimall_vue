@@ -145,6 +145,7 @@ export default {
       }).then(({ data }) => {
         this.getCateRelation();
       });
+      this.catelogPath=[];
     },
     deleteCateRelationHandle(id, brandId) {
       this.$http({

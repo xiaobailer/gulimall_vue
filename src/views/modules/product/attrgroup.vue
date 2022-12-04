@@ -11,6 +11,7 @@
           </el-form-item>
           <el-form-item>
             <el-button @click="getDataList()">查询</el-button>
+            <el-button type="success" @click="getAllDataList()">查询全部</el-button>
             <el-button
               v-if="isAuth('product:attrgroup:save')"
               type="primary"
@@ -46,6 +47,7 @@
             label="操作"
           >
             <template slot-scope="scope">
+              <el-button type="text" size="small" @click="relationHandle(scope.row.attrGroupId)">关联</el-button>
               <el-button
                 type="text"
                 size="small"
@@ -66,19 +68,29 @@
         ></el-pagination>
         <!-- 弹窗, 新增 / 修改 -->
         <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+
+        <!-- 修改关联关系 -->
+        <relation-update v-if="relationVisible" ref="relationUpdate" @refreshData="getDataList"></relation-update>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-//这里可以导入其他文件（比如：组件，工具 js，第三方插件 js，json文件，图片文件等等）
-//例如：import 《组件名称》 from '《组件路径》';
+/**
+ * 父子组件传递数据
+ * 1)、子组件给父组件传递数据，事件机制；
+ *    子组件给父组件发送一个事件，携带上数据。
+ * // this.$emit("事件名",携带的数据...)
+ */
+//这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
+//例如：import 《组件名称》 from '《组件路径》';
 import Category from "../common/category";
 import AddOrUpdate from "./attrgroup-add-or-update";
+import RelationUpdate from "./attr-group-relation";
 export default {
-  //import 引入的组件需要注入到对象中才能使用
-  components: { Category: Category, AddOrUpdate: AddOrUpdate },
+  //import引入的组件需要注入到对象中才能使用
+  components: { Category, AddOrUpdate, RelationUpdate },
   props: {},
   data() {
     return {
@@ -92,26 +104,31 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      relationVisible: false
     };
   },
   activated() {
     this.getDataList();
   },
   methods: {
+    //处理分组与属性的关联
+    relationHandle(groupId) {
+      this.relationVisible = true;
+      this.$nextTick(() => {
+        this.$refs.relationUpdate.init(groupId);
+      });
+    },
     //感知树节点被点击
     treenodeclick(data, node, component) {
-      console.log(
-        "attrgroup感知到category的节点被点击：",
-        data,
-        node,
-        component
-      );
-      console.log("刚才被点击的菜单id:", data.catId);
-      if(node.level == 3){  
+      if (node.level == 3) {
         this.catId = data.catId;
-        this.getDataList();//重新查询
+        this.getDataList(); //重新查询
       }
+    },
+    getAllDataList(){
+      this.catId = 0;
+      this.getDataList();
     },
     // 获取数据列表
     getDataList() {
@@ -196,5 +213,5 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped>
 </style>
